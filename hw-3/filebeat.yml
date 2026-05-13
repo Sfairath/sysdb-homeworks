@@ -1,0 +1,12 @@
+filebeat.inputs:
+  - type: filestream
+    id: container-logs
+    enabled: true
+    paths:
+      - "/var/lib/docker/containers/*/*.log"
+
+processors:
+  - add_docker_metadata: ~
+
+output.logstash:
+  hosts: ["logstash:5000"]
