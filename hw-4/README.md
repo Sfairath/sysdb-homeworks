@@ -30,6 +30,11 @@
 
 **Результатом выполнения задания** должен стать скриншот получившейся схемы базы данных.
 
+### Решение 1
+
+[Схема БД Postgres](https://drawdb.vercel.app/editor?shareId=ae7a3b791928fd04916b3399870a215e)
+![Картинка](./img/task1.png)
+
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению. Вы можете их выполнить, если хотите глубже и шире разобраться в материале.
 
@@ -43,3 +48,56 @@
 В качестве решения приложите SQL скрипт и скриншот диаграммы.
 
 Для написания и редактирования sql удобно использовать  специальный инструмент dbeaver.
+
+### Решение 2*
+#### Скрипт
+```SQL
+CREATE TABLE IF NOT EXISTS "Адреса" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"address" VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS "Должность" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"position" VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS "Тип подразделения" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"name" VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS "Проекты" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"name" VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS "Подразделение" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"name" VARCHAR(255),
+	"adress_id" INTEGER,
+	"type_id" INTEGER,
+	foreign key ("adress_id") references "Адреса"("id"),
+	foreign key ("type_id") references "Тип подразделения"("id")
+);
+
+CREATE TABLE IF NOT EXISTS "Сотрудник" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"name" VARCHAR(255),
+	"hired" DATE,
+	"salary" INTEGER,
+	"division_id" INTEGER,
+	"position_id" INTEGER,
+	foreign key ("division_id") references "Подразделение"("id"),
+	foreign key ("position_id") references "Должность"("id")
+);
+
+CREATE TABLE IF NOT EXISTS "Проект-сотрудник" (
+	"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	"project_id" INTEGER,
+	"employee_id" INTEGER,
+	foreign key ("project_id") references "Проекты"("id"),
+	foreign key ("employee_id") references "Сотрудник"("id")
+);
+```
+![Диаграмма](./img/task2.png)

@@ -1,0 +1,23 @@
+services:
+  postgres:
+    container_name: postgres
+    
+    image: postgres:14.23-alpine3.23
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+    ports:
+      - 5432:5432
+    
+    env_file:
+      - ./postgres.env
+      
+    environment:
+      - POSTGRES_USER=db_admin
+      - POSTGRES_DB=my_db
+    
+    restart: on-failure:5
+
+volumes:
+  postgres_data:
