@@ -18,6 +18,7 @@
 
 ### Решение 2
 [Конфиг мастера](master.cnf), [конфиг slave](slave.cnf)
+![Master status](./img/1.png) ![Replica status](./img/2.png)
 
 ---
 
